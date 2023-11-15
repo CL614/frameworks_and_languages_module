@@ -102,7 +102,7 @@ app.delete('/item/:id', (req, res) => {
     return res.status(204)
   }
   else
-  console.log("The item you are trying to delete does not exsist")
+  console.log("The item you are trying to delete does not exist")
   res.status(404).json()
 })
 
