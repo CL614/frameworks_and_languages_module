@@ -1,15 +1,8 @@
- 
-DOCKER_IMAGE:=express_test_simple
+ DOCKER_IMAGE:=server_express
 
-## Container
 build:
 	docker build --tag ${DOCKER_IMAGE} .
 run:
-	docker run --rm -it --publish 3000:3000 ${DOCKER_IMAGE}
+	docker run --rm -it --publish 8000:8000 ${DOCKER_IMAGE}
 
-## Local
-local_install:
-	npm install express
-local_run:
-	node app.js
- 
+
