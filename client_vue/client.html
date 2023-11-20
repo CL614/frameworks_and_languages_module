@@ -2,116 +2,103 @@
 <html>
 <head>
     <meta charset="utf-8" />
-
-    <style></style>
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>Tool App</title>
     <script type="importmap">
         {
-            "imports": {
-                "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
-            }
+          "imports": {
+            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
         }
-
     </script>
-
 </head>
 <body>
     <h1>Tool App</h1>
     <div id="app">
+
         <h2>Create</h2>
-            <form @submit.prevent="addItem">
-                <input name="Tool name" v-model="item.name" placeholder="Item Name">
-			    <input name="description" v-model="item.description" placeholder="Item description">
-			    <button data-action="addItem">Add</button>
-            </form>
+        <form @submit.prevent="createItem">
+            <input v-model="item.user_id" name="user_id" placeholder="user_id">
+            <input v-model="item.lat" name="lat" placeholder="lat">
+            <input v-model="item.lon" name="lon" placeholder="lon">
+            <input v-model="item.image" name="image" placeholder="image">
+            <input v-model="item.keywords" name="keywords" placeholder="keywords">
+            <textarea v-model="item.description" name="description" placeholder="description"></textarea>
+            <button type="submit">Create Item</button>
+        </form>
 
-        <h2>
-            <ul>
-                <li v-for="item in items">
-                    <span data-field="name">{{item.name}}</span>
-                    <span data-field="description">{{item.description}}</span>
-                    <button data-action="deleteItem" @click="deleteItem(item.id)">Remove</button>
-                </li>
-            </ul>
+        <h2>Items</h2>
+        <ul>
+            <li v-for="item in items" :key="item.id">
+                <img :src="item.image">
+                <span data-field="id">{{ item.id }}</span>
+                <span data-field="lat">{{ item.lat }}</span>
+                <span data-field="lon">{{ item.lon }}</span>
+                <span data-field="image">{{ item.image }}</span>
+                <span data-field="keywords">{{ item.keywords }}</span>
+                <span data-field="description">{{ item.description }}</span>
+                <button @click="deleteItem(item.id)">Delete</button>
+            </li>
+        </ul>
 
-        </h2>
-    </div> 
-    
-   <!--
-    <div class="uploadOuter">
-        <label for="uploadFile" class="btn btn-primary">Upload Image</label>
-        <strong>OR</strong>
-      <span class="dragBox" >
-        Darg and Drop image here
-      <input type="file" onChange="dragNdrop(event)"  ondragover="drag()" ondrop="drop()" id="uploadFile"  />
-      </span>
-      </div>
-      <div id="preview"></div> 
-    -->
+    </div>
 
-<script type="module">
-    import { createapp } from 'vue'
+    <script type="module">
+        urlAPI = 'http://localhost:8000';
 
-    const urlAPI = ''
+        const app = Vue.createApp({
+            data() {
+                return {
+                    item: {
+                        user_id: "",
+                        lat: "",
+                        lon: "",
+                        image: "",
+                        keywords: "",
+                        description: "",
+                    },
+                    items: [],
+                };
+            },
+            created() {
+                this.getItems();
+            },
+            methods: {
+                getItems() {
+                    fetch(`${urlAPI}/items`)
+                        .then(response => response.json())
+                        .then(json => {
+                            this.items = json;
+                        })
+                        .catch(err => console.error(err));
+                },
+                createItem() {
+                    fetch(`${urlAPI}/item`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(this.item),
+                    })
+                        .then(response => response.json())
+                        .then(json => {
+                            console.log("createItem()", json);
+                            this.getItems();
+                        })
+                        .catch(err => console.error(err));
+                },
+                deleteItem(item_id) {
+                    fetch(`${urlAPI}/item/${item_id}`, {
+                        method: "DELETE",
+                    })
+                        .then(() => {
+                            console.log("deleteItem()");
+                            this.getItems();
+                        })
+                        .catch(err => console.error(err));
+                },
+            },
+        });
 
-    const RootComponent = 
-    {
-	  data() 
-      {
-		return {
-			item: {
-				id: '',
-                user_id: '',
-                keywords: '',
-                description: '',
-                image: '',
-                latitude: '', 
-                longitude: '',
-                date_start: '',
-                date_end: '',
-			},
-			items: [],
-		}
-	  },
-      created() {
-        this.clearInput()
-        this.updateItem()
-      },
-      components: {
-
-      },
-      methods: {
-        updateItem() {
-            
-        },
-        clearInput(){
-
-        },
-        addItem(){
-
-        },
-        deleteItem(id){
-
-        },
-      }
-    }
-
-
-
-
-
-
-
-
-
-
-    const app = createApp(RootComponent)
-	const vm = app.mount('#app')
-</script>
-
-
-   
-
+        const vm = app.mount("#app");
+    </script>
 </body>
-
-
 </html>
