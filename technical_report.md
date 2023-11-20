@@ -10,10 +10,20 @@ Critique of Server/Client prototype
 ### Overview
 ()
 
-### (name of Issue 1)
+### (Route Handling in example_server)
 
-(A code snippet example demonstrating the issue)
-(Explain why this pattern is problematic - 40ish words)
+```python
+ROUTES = (
+    ('OPTIONS', r'.*', options_response),
+    ('GET', r'/$', get_index),
+    ('POST', r'/item$', post_item),
+    ('GET', r'/item/(?P<id>\d+)$', get_item),
+    ('DELETE', r'/item/(?P<id>\d+)$', delete_item),
+    ('GET', r'/items$', get_items),
+```
+
+The way these routes are defined creates an issue. Looking especially at the options request. The code means that any option request received by the server will generate the same response. In order to create different response for different option request additional routes would have to be added in, meaning for large scale applications, this would be become unmaintainable.
+
 
 ### (name of Issue 2)
 
@@ -126,6 +136,4 @@ Conclusions
 
 
 
-Middleware
 
-Middle ware allows the stacking of moudlar actions outside the server coding. this allows for speedier processing when a request reaches the server
