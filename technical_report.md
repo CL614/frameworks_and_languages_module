@@ -10,7 +10,7 @@ Critique of Server/Client prototype
 ### Overview
 ()
 
-### (Route Handling in example_server)
+### (Route Defining in example_server)
 
 ```python
 ROUTES = (

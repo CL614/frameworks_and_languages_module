@@ -89,7 +89,7 @@ ITEM[newID] = {
 },
 // creates status code and displays all items 
 res.status(201).json(Item[newID])
-console.log(Object.entries(ITEM[newID]))
+console.log(Object.entries(ITEM))
 })
 
 //deletes item using the items ID

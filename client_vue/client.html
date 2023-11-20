@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <style></style>
+    <script type="importmap">
+        {
+            "imports": {
+                "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+    <h1>Tool App</h1>
+    <div id="app">
+        <h2>Create</h2>
+            <form @submit.prevent="addItem">
+                <input name="Tool name" v-model="item.name" placeholder="Item Name">
+			    <input name="description" v-model="item.description" placeholder="Item description">
+			    <button data-action="addItem">Add</button>
+            </form>
+
+        <h2>
+            <ul>
+                <li v-for="item in items">
+                    <span data-field="name">{{item.name}}</span>
+                    <span data-field="description">{{item.description}}</span>
+                    <button data-action="deleteItem" @click="deleteItem(item.id)">Remove</button>
+                </li>
+            </ul>
+
+        </h2>
+    </div> 
+    
+   <!--
+    <div class="uploadOuter">
+        <label for="uploadFile" class="btn btn-primary">Upload Image</label>
+        <strong>OR</strong>
+      <span class="dragBox" >
+        Darg and Drop image here
+      <input type="file" onChange="dragNdrop(event)"  ondragover="drag()" ondrop="drop()" id="uploadFile"  />
+      </span>
+      </div>
+      <div id="preview"></div> 
+    -->
+
+<script type="module">
+    import { createapp } from 'vue'
+
+    const urlAPI = ''
+
+    const RootComponent = 
+    {
+	  data() 
+      {
+		return {
+			item: {
+				id: '',
+                user_id: '',
+                keywords: '',
+                description: '',
+                image: '',
+                latitude: '', 
+                longitude: '',
+                date_start: '',
+                date_end: '',
+			},
+			items: [],
+		}
+	  },
+      created() {
+        this.clearInput()
+        this.updateItem()
+      },
+      components: {
+
+      },
+      methods: {
+        updateItem() {
+            
+        },
+        clearInput(){
+
+        },
+        addItem(){
+
+        },
+        deleteItem(id){
+
+        },
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    const app = createApp(RootComponent)
+	const vm = app.mount('#app')
+</script>
+
+
+   
+
+</body>
+
+
+</html>
