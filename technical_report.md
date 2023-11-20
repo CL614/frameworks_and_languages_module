@@ -123,3 +123,9 @@ Conclusions
 
 (justify why frameworks are recommended - 120ish words)
 (justify which frameworks should be used and why 180ish words)
+
+
+
+Middleware
+
+Middle ware allows the stacking of moudlar actions outside the server coding. this allows for speedier processing when a request reaches the server

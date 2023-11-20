@@ -1,5 +1,5 @@
   FROM node
   WORKDIR /app/
-  RUN npm install ???  # what was the package?
+  RUN npm install express
   COPY *.js .
   CMD ["???", "app.js"]
