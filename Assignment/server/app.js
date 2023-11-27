@@ -16,13 +16,14 @@ app.use(express.urlencoded({extended: true}))
 
 // creates welcome message
 app.get('/', (req, res) => {
-  res.send("Hello World");
+  //res.send("Hello World");
+  res.sendFile("client.html", {root: __dirname});
 });
 //defines path to get current date
 const currentDate = new Date().toISOString()
 
 // initializes item with items details
-ITEM = {
+let ITEMS = {
   1: {
     "id": 1,
     "user_id": "User1",
@@ -36,6 +37,23 @@ ITEM = {
 
   },
 };
+
+
+app.get('/items', (req, res) => {
+ res.json(ITEMS)
+})
+
+app.post('/item', (req, res) => {
+  ITEM.push(req.body)
+  res.status(201).json()
+ })
+
+ app.delete('/item:id', (req, res) => {
+  const ID = req.params.id
+  ITEMS = ITEMS.filter((item)=> item.id!=ID)
+  res.status(204).json()
+ })
+
 //returns all Items
 app.get('/items', (req, res) => {
   res.status(200).json(Object.values(ITEM))

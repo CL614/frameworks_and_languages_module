@@ -31,26 +31,30 @@
         <ul>
             <li v-for="item in items" :key="item.id">
                 <img :src="item.image">
-                <span data-field="id">{{ item.id }}</span>
+                <span data-field="item_id">{{ item.id }}</span>
                 <span data-field="lat">{{ item.lat }}</span>
                 <span data-field="lon">{{ item.lon }}</span>
                 <span data-field="image">{{ item.image }}</span>
                 <span data-field="keywords">{{ item.keywords }}</span>
                 <span data-field="description">{{ item.description }}</span>
-                <button @click="deleteItem(item.id)">Delete</button>
+                <button  data-action="delete" @click="deleteItem(item.id)">Delete</button>
             </li>
         </ul>
 
     </div>
 
     <script type="module">
-        urlAPI = 'http://localhost:8000';
+        import { createApp } from 'vue'
 
-        const app = Vue.createApp({
+        //const urlParams = new URLSearchParams(window.location.search);
+        //const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
+        const urlAPI = ''
+
+        const RootComponent = {
             data() {
                 return {
                     item: {
-                        user_id: "",
+                        item_id: "",
                         lat: "",
                         lon: "",
                         image: "",
@@ -62,6 +66,9 @@
             },
             created() {
                 this.getItems();
+                this.clearInput();
+            },
+            components: {
             },
             methods: {
                 getItems() {
@@ -72,33 +79,37 @@
                         })
                         .catch(err => console.error(err));
                 },
-                createItem() {
+                clearInput() {
+			this.attendee = {...this.attendee, ...{
+				id: Math.random(),
+				name: undefined,
+				notes: undefined,
+			}}
+		},
+                addItem() {
                     fetch(`${urlAPI}/item`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(this.item),
                     })
                         .then(response => response.json())
-                        .then(json => {
-                            console.log("createItem()", json);
-                            this.getItems();
-                        })
+                        .then(()=>this.clearInput())
+                        .then(()=>getItems())
                         .catch(err => console.error(err));
                 },
-                deleteItem(item_id) {
-                    fetch(`${urlAPI}/item/${item_id}`, {
+                deleteItem(id) {
+                    fetch(`${urlAPI}/item/${id}`, {
                         method: "DELETE",
                     })
-                        .then(() => {
-                            console.log("deleteItem()");
-                            this.getItems();
-                        })
+                        .then(() =>this.getItems())
                         .catch(err => console.error(err));
+                            
                 },
             },
-        });
-
+        };
+        const app = createApp(RootComponent)
         const vm = app.mount("#app");
     </script>
+
 </body>
 </html>
