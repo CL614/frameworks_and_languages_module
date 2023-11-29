@@ -24,7 +24,7 @@
             <input v-model="item.image" name="image" placeholder="image">
             <input v-model="item.keywords" name="keywords" placeholder="keywords">
             <textarea v-model="item.description" name="description" placeholder="description"></textarea>
-            <button type="submit">Create Item</button>
+            <button type="submit" @click="addItem()">Create Item</button>
         </form>
 
         <h2>Items</h2>
@@ -54,6 +54,7 @@
             data() {
                 return {
                     item: {
+                        user_id: "",
                         item_id: "",
                         lat: "",
                         lon: "",
@@ -98,9 +99,7 @@
                         .catch(err => console.error(err));
                 },
                 deleteItem(id) {
-                    fetch(`${urlAPI}/item/${id}`, {
-                        method: "DELETE",
-                    })
+                    fetch(`${urlAPI}/item/${id}`, {method: "DELETE",})
                         .then(() =>this.getItems())
                         .catch(err => console.error(err));
                             

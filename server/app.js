@@ -53,7 +53,7 @@ app.post('/item', (req, res) => {
   ITEMS = ITEMS.filter((item)=> item.id!=ID)
   res.status(204).json()
  })
-
+/*
 //returns all Items
 app.get('/items', (req, res) => {
   res.status(200).json(Object.values(ITEM))
@@ -122,7 +122,7 @@ app.delete('/item/:id', (req, res) => {
   else
   console.log("The item you are trying to delete does not exist")
   res.status(404).json()
-})
+})*/
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
