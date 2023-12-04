@@ -17,14 +17,16 @@
     <div id="app">
 
         <h2>Create</h2>
-        <form @submit.prevent="createItem">
+        
+        <form @submit.prevent="addItem">
             <input v-model="item.user_id" name="user_id" placeholder="user_id">
+            <input v-model="item.item_id" name="item_id" placeholder="item_id">
             <input v-model="item.lat" name="lat" placeholder="lat">
             <input v-model="item.lon" name="lon" placeholder="lon">
             <input v-model="item.image" name="image" placeholder="image">
             <input v-model="item.keywords" name="keywords" placeholder="keywords">
             <textarea v-model="item.description" name="description" placeholder="description"></textarea>
-            <button type="submit" @click="addItem()">Create Item</button>
+            <button type="submit">Create Item</button>
         </form>
 
         <h2>Items</h2>
@@ -37,7 +39,7 @@
                 <span data-field="image">{{ item.image }}</span>
                 <span data-field="keywords">{{ item.keywords }}</span>
                 <span data-field="description">{{ item.description }}</span>
-                <button  data-action="delete" @click="deleteItem(item.id)">Delete</button>
+                <button  data-action="delete" onclick="deleteItem(item.id)">Delete</button>
             </li>
         </ul>
 
@@ -46,21 +48,20 @@
     <script type="module">
         import { createApp } from 'vue'
 
-        //const urlParams = new URLSearchParams(window.location.search);
-        //const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
-        const urlAPI = ''
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
+        
 
         const RootComponent = {
             data() {
                 return {
                     item: {
-                        user_id: "",
                         item_id: "",
+                        description: "",
+                        image: "",
                         lat: "",
                         lon: "",
-                        image: "",
                         keywords: "",
-                        description: "",
                     },
                     items: [],
                 };
@@ -81,7 +82,7 @@
                         .catch(err => console.error(err));
                 },
                 clearInput() {
-			this.attendee = {...this.attendee, ...{
+			    this.attendee = {...this.attendee, ...{
 				id: Math.random(),
 				name: undefined,
 				notes: undefined,
@@ -89,8 +90,8 @@
 		},
                 addItem() {
                     fetch(`${urlAPI}/item`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                    method: "POST",
+                     headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(this.item),
                     })
                         .then(response => response.json())
@@ -99,7 +100,7 @@
                         .catch(err => console.error(err));
                 },
                 deleteItem(id) {
-                    fetch(`${urlAPI}/item/${id}`, {method: "DELETE",})
+                    fetch(`${urlAPI}/item/${item_id}`, {method: "DELETE",})
                         .then(() =>this.getItems())
                         .catch(err => console.error(err));
                             

@@ -1,13 +1,7 @@
-FROM python:alpine
-#FROM nginx:alpine
+FROM nginx:alpine
 
-WORKDIR /app/
+WORKDIR /usr/share/nginx/html
 
-EXPOSE 8001
-#VOLUME /logs
+#RUN curl https://unpkg.com/vue@3/dist/vue.esm-browser.js -L -o vue.esm-browser.js
 
-#COPY nginx.conf /etc/nginx/nginx.conf
-#COPY index.html /app/www/
-
-COPY index.html .
-CMD ["python3", "-m", "http.server", "8001"]
+COPY . .
