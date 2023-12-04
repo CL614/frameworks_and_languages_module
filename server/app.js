@@ -43,8 +43,9 @@ app.get('/items', (req, res) => {
 })
 
 app.post('/item', (req, res) => {
-  // add incoming 'req.body' to dictionary
-  console.log(Items)
+  let new_key = Math.random()
+  //ITEMS = { new_key :  }
+  console.log(ITEMS)
   res.status(201).json()
  })
 
