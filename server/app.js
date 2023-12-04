@@ -43,10 +43,19 @@ app.get('/items', (req, res) => {
 })
 
 app.post('/item', (req, res) => {
+  const reqFields = ["user_id", "keywords", "description", "lat" , "lon"]
+  if (!reqFields.every(field=>req.body.hasOwnPropert(field)))
+  {
+    console.log("missing Data")
+    return res.status(405).json()
+  }
+  else
+  {
   let new_key = Math.random()
   //ITEMS = { new_key :  }
   console.log(ITEMS)
   res.status(201).json()
+  }
  })
 
  app.delete('/item:item_id', (req, res) => {
