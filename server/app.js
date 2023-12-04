@@ -43,7 +43,6 @@ app.get('/items', (req, res) => {
 })
 
 app.post('/item', (req, res) => {
-  
   ITEMS = { 2 : req.body }
   console.log(Items)
   res.status(201).json()
