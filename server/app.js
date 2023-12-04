@@ -43,15 +43,13 @@ app.get('/items', (req, res) => {
 })
 
 app.post('/item', (req, res) => {
-  ITEMS = { 2 : req.body }
+  // add incoming 'req.body' to dictionary
   console.log(Items)
   res.status(201).json()
  })
 
  app.delete('/item:item_id', (req, res) => {
-  const ID = req.params.id
-  ITEMS.delete(ID)
-  console.log(ITEMS)
+  //remove using delete and id from dictionary
   res.status(204).json()
  })
 

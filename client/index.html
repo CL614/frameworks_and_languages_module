@@ -36,7 +36,7 @@
                 <span data-field="image">{{ item.image }}</span>
                 <span data-field="keywords">{{ item.keywords }}</span>
                 <span data-field="description">{{ item.description }}</span>
-                <button  data-action="delete" onclick="deleteItem(item.id)">Delete</button>
+                <button  data-action="delete" @click="deleteItem(item.id)">Delete</button>
             </li>
         </ul>
 
