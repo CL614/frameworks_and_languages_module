@@ -1,5 +1,7 @@
-FROM node
-WORKDIR /app/
-RUN npm install express
+FROM node:alpine
+WORKDIR /server/
+COPY package.json ./
+RUN npm install
 COPY . .
+
 ENTRYPOINT ["node", "app.js"]
