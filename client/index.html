@@ -88,8 +88,8 @@
                 },
 
                 clearInput() {
-                    this.ite.user_id = ''
-                    this.item.keywords = ''
+                    this.item.user_id = ''
+                    this.item.keywords = [""]
                     this.item.description = ''
                     this.item.image = ''
                     this.item.lat = ''
@@ -97,6 +97,8 @@
                 },
 
                 addItem(data) {
+                    const keywordsArray = this.keywordsInput.split(',');
+                    this.item.keywords = keywordsArray;
                     console.log(this.item)
                     fetch(`${urlAPI}/item`, {
                         method: "POST",

@@ -26,7 +26,7 @@ const currentDate = new Date().toISOString()
 // initializes item with items details
 let ITEMS = [
   {
-    "id": 1,
+    "item_id": 1,
     "user_id": "Callum123",
     "keywords": [
       "Word1",
@@ -50,37 +50,46 @@ app.get('/items', (req, res) => {
 
 app.post('/item', (req, res) => {
 
-  if (!req.body.user_id || !req.body.keywords || !req.body.description || !req.body.lat || !req.body.lon) {
-    console.log("Missing Data")
-    return res.status(405).json()
-  }
-  else {
-    req.body['date_start'] = currentDate
-    req.body['date_end'] = currentDate
-    req.body['item_id'] = Math.random()
-    console.log("About to add item")
+  let reqFields = ['user_id', 'keywords', 'description', 'image', 'lat', 'lon' ]
+  const enteredFields = Object.keys(req.body).toString().split(',')
 
-    let new_Item = {
-      "id": Math.random(),
-      "user_ID": req.body.user_id,
-      "keywords": req.body.keywords,
-      "description": req.body.description,
-      "image": req.body.image,
-      "latitude": req.body.lat,
-      "longitude": req.body.lon,
-      "date_start": currentDate,
-      "date_end": currentDate,
-    };
+  let expectedFields = 5;
+  let fields = 0;
+
+  if(enteredFields[3] === 'image' || enteredFields[4] === 'image'){
+    expectedFields++;
+  }
+  else{
+    reqFields.splice(3,1);
+  }
+  for (let i = 0; i < reqFields.length; i++){
+    if (enteredFields[i] == reqFields[i]){
+      fields++;
+    }
+  }
+   if (fields !== expectedFields){
+    console.log("Missing Data! 405")
+    res.status(405).json({"message": "Missing data"})
+   }
+    
+   let new_Item = {
+    id: Math.random(),
+    ...req.body,
+
+    date_from: currentDate,
+    date_to: currentDate
+   }
+    
+    
 
     ITEMS.push(new_Item)
     console.log("successful Post")
     res.status(201).json(new_Item)
-  }
+  
 })
 
 app.delete('/item:item_id', (req, res) => {
-  //remove using delete and id from dictionary
-  res.status(204).json()
+  
 })
 
 
