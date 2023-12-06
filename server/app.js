@@ -14,29 +14,38 @@ app.use(cors())
 //sets up middleware for handling URL payloads
 app.use(express.urlencoded({ extended: true }))
 
-// creates welcome message
+// loads client.html when server is loaded
 app.get('/', (req, res) => {
-  res.send("Hello World");
+  //res.send("Hello World");
+  res.status(200).sendFile("client.html", {root: __dirname})
 
 });
 //defines path to get current date
 const currentDate = new Date().toISOString()
 
 // initializes item with items details
-let ITEMS = {
-  "id": 1,
-  "keywords": ["saw", "wood", "tools"],
-  "description": "A saw and wood ",
-  "image": "https://placekitten.com/200/300",
-  "latitude": 37.38797546109132,
-  "longitude": -122.05688209785687,
-  "date_start": currentDate,
-  "date_end": currentDate,
-};
+let ITEMS = [
+  {
+    "id": 1,
+    "user_id": "Callum123",
+    "keywords": [
+      "Word1",
+      "Word2",
+      "Word3",
+    ],
+    "description": "1111111111111111",
+    "image": "https://i.imgur.com/SCEwQdk.jpeg",
+    "lat": 12.86568,
+    "lon": -67.09876543,
+    "date_from": currentDate,
+    "date_to": currentDate
+
+  }
+];
 
 
 app.get('/items', (req, res) => {
-  res.json(ITEMS)
+  res.status(200).json(ITEMS)
 })
 
 app.post('/item', (req, res) => {
