@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
@@ -12,6 +13,7 @@
         }
     </script>
 </head>
+
 <body>
     <h1>Tool App</h1>
     <div id="app">
@@ -30,85 +32,93 @@
         <ul>
             <li v-for="item in items" :key="item.id">
                 <img :src="item.image">
+                <span data-field="user_id">{{ item.user_id }}</span>
                 <span data-field="item_id">{{ item.item_id }}</span>
                 <span data-field="lat">{{ item.lat }}</span>
                 <span data-field="lon">{{ item.lon }}</span>
                 <span data-field="image">{{ item.image }}</span>
                 <span data-field="keywords">{{ item.keywords }}</span>
                 <span data-field="description">{{ item.description }}</span>
-                <button  data-action="delete" @click="deleteItem(item.item_id)">Delete</button>
+                <button data-action="delete" @click="deleteItem(item.item_id)">Delete</button>
             </li>
         </ul>
 
     </div>
 
     <script type="module">
-        import { createApp } from 'vue'
+        import { createApp, ref } from 'vue'
 
         const urlParams = new URLSearchParams(window.location.search);
         const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
-        
 
-        const RootComponent = {
+
+        createApp(
+        {
             data() {
                 return {
+                    message: 'Hello',
                     item: {
-                        item_id: "",
+                        user_id: "",
+                        keywords: "",
                         description: "",
                         image: "",
                         lat: "",
                         lon: "",
-                        keywords: "",
+
                     },
-                    items: [],
+                    item: [],
                 };
             },
             created() {
                 this.getItems();
                 this.clearInput();
-                this.addItem();
-                this.deleteItem();
             },
-            components: {
-            },
+
             methods: {
                 getItems() {
                     fetch(`${urlAPI}/items`)
                         .then(response => response.json())
                         .then(json => {
+                            console.log("Successful GET request")
                             this.items = json;
                         })
                         .catch(err => console.error(err));
                 },
                 clearInput() {
-			    this.attendee = {...this.attendee, ...{
-				id: Math.random(),
-				name: undefined,
-				notes: undefined,
-			}}
-		},
-                addItem() {
+                    this.attendee = {
+                        ...this.attendee, ...{
+                            id: Math.random(),
+                            name: undefined,
+                            notes: undefined,
+                        }
+                    }
+                },
+                addItem(data) {
+                    console.log(this.item)
                     fetch(`${urlAPI}/item`, {
-                    method: "POST",
-                     headers: { "Content-Type": "application/json" },
+                        method: "POST",
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(this.item),
                     })
                         .then(response => response.json())
-                        .then(()=>this.clearInput())
-                        .then(()=>getItems())
-                        .catch(err => console.error(err));
+                        .then(json => console.log('Item Posted', json))
+                        .then(() => this.getItems())
+                        .catch(err => console.error(err))
+                        .then(() => this.clearInput());
                 },
                 deleteItem(item_id) {
-                    fetch(`${urlAPI}/item/${item_id}`, {method: "DELETE",})
-                        .then(() =>this.getItems())
+                    fetch(`${urlAPI}/item/${item_id}`, { method: "DELETE", })
+                        .then(() => this.getItems())
                         .catch(err => console.error(err));
-                            
+
                 },
             },
-        };
+
+        });
         const app = createApp(RootComponent)
         const vm = app.mount("#app");
     </script>
 
 </body>
+
 </html>
