@@ -71,17 +71,14 @@ app.post('/item', (req, res) => {
     console.log("Missing Data! 405")
     res.status(405).json({"message": "Missing data"})
    }
-    
+  
    let new_Item = {
     id: Math.random(),
     ...req.body,
-
     date_from: currentDate,
     date_to: currentDate
    }
     
-    
-
     ITEMS.push(new_Item)
     console.log("successful Post")
     res.status(201).json(new_Item)
@@ -89,7 +86,17 @@ app.post('/item', (req, res) => {
 })
 
 app.delete('/item:item_id', (req, res) => {
-  
+  const ID = (req.params.item_id)
+
+  if (ID === -1)
+  {
+    return res.status(404).json({"message": "ID does not exist"})
+  }
+  else{
+  ITEMS.splice(ID, 1)
+  console.log("DELETE 204 id: ", ID.toString())
+  res.status(204).json()
+  }
 })
 
 
