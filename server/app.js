@@ -29,7 +29,7 @@ app.use(function (err, req, res, next) {
 //defines path to get current date
 const currentDate = new Date().toISOString()
 
-let randomId = Math.random();
+let randomId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
 
 // initializes item with items details
 let ITEMS = [
@@ -58,10 +58,10 @@ app.get('/items', (req, res) => {
   res.status(200).json(ITEMS)
 })
 
-app.get('/item:/id', (req, res) => {
-  const specificItemID = parseFloat(req.params.id);
+app.get('/item/:itemId', (req, res) => {
+  const specificItemID = parseFloat(req.params.itemId);
 
-  const specificItem = ITEMS.find(specificItem => item.id === specificItemID);
+  const specificItem = ITEMS.find(specificItem => specificItem.id === specificItemID);
 
   if (!specificItem){
     console.log("GET /specificItem/{specificItemID} 404 id: " +specificItemID.toString());
@@ -114,15 +114,14 @@ app.post('/item', (req, res) => {
 
 })
 
-app.delete('/item/:id', (req, res) => {
-  let deleteID = req.params.id;
-  const item = ITEMS.findIndex(item => item.id === deleteID);
-  
+app.delete('/item/:itemId', (req, res) => {
+  const deleteID = parseFloat(req.params.itemId);
+  const itemIndex = ITEMS.findIndex(item => item.id === deleteID);
 
-  if (deleteID === -1) {
+  if (itemIndex === -1) {
     return res.status(404).json({ "message": "ID does not exist" })
   }
-  ITEMS.splice(deleteID, 1)
+  ITEMS.splice(itemIndex, 1)
   console.log("DELETE 204 id: ", deleteID.toString())
   res.status(204).json()
 
