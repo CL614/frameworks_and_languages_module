@@ -20,5 +20,6 @@ To stop the client side enter Ctrl + C into the terminal
 To run the client within a container we must call upon the make file we do this by entering the following code
 
 ```
+cd client
 make build && make run
 ```
