@@ -20,11 +20,11 @@
         <h2>Create</h2>
         <form @submit.prevent="addItem">
             <input v-model="item.user_id" name="user_id" placeholder="user_id">
-            <input v-model="item.lat" name="lat" placeholder="lat">
-            <input v-model="item.lon" name="lon" placeholder="lon">
-            <input v-model="item.image" name="image" placeholder="image">
             <input v-model="keywordsInput" name="keywords" placeholder="keywords">
             <textarea v-model="item.description" name="description" placeholder="description"></textarea>
+            <input v-model="item.image" name="image" placeholder="image">
+            <input v-model="item.lat" name="lat" placeholder="lat">
+            <input v-model="item.lon" name="lon" placeholder="lon">
             <button data-action="Create_Item">Create Item</button>
         </form>
 
@@ -32,13 +32,12 @@
         <ul>
             <li v-for="item in items" :key="item.id">
                 <img :src="item.image">
-                <span data-field="user_id">{{ item.user_id }}</span>
                 <span data-field="item_id">{{ item.item_id }}</span>
-                <span data-field="lat">{{ item.lat }}</span>
-                <span data-field="lon">{{ item.lon }}</span>
-                <span data-field="image">{{ item.image }}</span>
+                <span data-field="user_id">{{ item.user_id }}</span>
                 <span data-field="keywords">{{ item.keywords }}</span>
                 <span data-field="description">{{ item.description }}</span>
+                <span data-field="lat">{{ item.lat }}</span>
+                <span data-field="lon">{{ item.lon }}</span>
                 <button data-action="delete" @click="deleteItem(item.item_id)">Delete</button>
             </li>
         </ul>
@@ -111,8 +110,10 @@
                         .catch(err => console.error(err))
                         .then(() => this.clearInput());
                 },
-                deleteItem(item_id) {
-                    fetch(`${urlAPI}/item/${item_id}`, { method: "DELETE", })
+                deleteItem(id) {
+                    fetch(`${urlAPI}/item/${id}`, { 
+                        method: "DELETE", 
+                    })
                         .then(() => this.getItems())
                         .catch(err => console.error(err));
 

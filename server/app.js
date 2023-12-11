@@ -92,11 +92,10 @@ app.delete('/item:item_id', (req, res) => {
   {
     return res.status(404).json({"message": "ID does not exist"})
   }
-  else{
   ITEMS.splice(ID, 1)
   console.log("DELETE 204 id: ", ID.toString())
   res.status(204).json()
-  }
+  
 })
 
 
