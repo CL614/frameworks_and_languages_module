@@ -32,7 +32,7 @@
         <ul>
             <li v-for="item in items" :key="item.id">
                 <img :src="item.image">
-                <span data-field="item_id">{{ item.item_id }}</span>
+                <span data-field="id">{{ item.id }}</span>
                 <span data-field="user_id">{{ item.user_id }}</span>
                 <span data-field="keywords">{{ item.keywords }}</span>
                 <span data-field="description">{{ item.description }}</span>
@@ -40,7 +40,7 @@
                 <span data-field="lon">{{ item.lon }}</span>
                 <span data-field="date_from">{{ item.date_from}}</span>
                 <span data-field="date_to">{{ item.date_to}}</span>
-                <button data-action="delete" @click="deleteItem(item.item_id)">Delete</button>
+                <button data-action="delete" @click="deleteItem(item.id)">Delete</button>
             </li>
         </ul>
 
@@ -54,20 +54,21 @@
 
 
         const RootComponent = {
-            data() { return {
-                message: 'Hello',
-                item: {
-                    id: '',
-                    user_id: '',
-                    keywords: '',
-                    description: '',
-                    image: '',
-                    lat: '',
-                    lon: '',
-                    date_from: '',
-                    date_to: '',
+            data() {
+                return {
+                    message: 'Hello',
+                    item: {
+                        id: '',
+                        user_id: '',
+                        keywords: '',
+                        description: '',
+                        image: '',
+                        lat: '',
+                        lon: '',
+                        date_from: '',
+                        date_to: '',
                     },
-                items: [],
+                    items: [],
                 }
             },
 
@@ -113,8 +114,8 @@
                         .then(() => this.clearInput());
                 },
                 deleteItem(id) {
-                    fetch(`${urlAPI}/item/${id}`, { 
-                        method: "DELETE", 
+                    fetch(`${urlAPI}/item/${id}`, {
+                        method: "DELETE",
                     })
                         .then(() => this.getItems())
                         .catch(err => console.error(err));
