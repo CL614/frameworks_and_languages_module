@@ -23,10 +23,12 @@ app.get('/', (req, res) => {
 //defines path to get current date
 const currentDate = new Date().toISOString()
 
+let randomId = Math.random();
+
 // initializes item with items details
 let ITEMS = [
   {
-    "item_id": 1,
+    "item_id": randomId,
     "user_id": "Callum123",
     "keywords": [
       "Word1",
@@ -73,7 +75,7 @@ app.post('/item', (req, res) => {
    }
   
    let new_Item = {
-    id: Math.random(),
+    item_id: randomId,
     ...req.body,
     date_from: currentDate,
     date_to: currentDate

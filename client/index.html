@@ -38,6 +38,8 @@
                 <span data-field="description">{{ item.description }}</span>
                 <span data-field="lat">{{ item.lat }}</span>
                 <span data-field="lon">{{ item.lon }}</span>
+                <span data-field="date_from">{{ item.date_from}}</span>
+                <span data-field="date_to">{{ item.date_to}}</span>
                 <button data-action="delete" @click="deleteItem(item.item_id)">Delete</button>
             </li>
         </ul>
