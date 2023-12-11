@@ -20,6 +20,12 @@ app.get('/', (req, res) => {
 res.status(200).sendFile("client.html", { root: __dirname })
 
 });
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send('Something went wrong')
+})
+
 //defines path to get current date
 const currentDate = new Date().toISOString()
 
@@ -29,28 +35,30 @@ let randomId = Math.random();
 let ITEMS = [
   {
     "id": randomId,
-    "user_id": "Callum123",
-    "keywords": [
-      "Word1",
-      "Word2",
-      "Word3",
-    ],
-    "description": "a hammer and nails set",
+    'user_id': "user1234",
+    'keywords': ["hammer", "nails", "tools"],
+    "description": "A hammer and nails set. In canterbury",
     "image": "https://i.imgur.com/SCEwQdk.jpeg",
-    "lat": 12.86568,
-    "lon": -67.09876543,
+    "lat": 51.2798438,
+    "lon": 1.0830275,
     "date_from": currentDate,
     "date_to": currentDate
 
   }
 ];
 
+app.options('/', (req, res) => {
+  res.status(204).set({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
+  }).end();
+});
 
 app.get('/items', (req, res) => {
   res.status(200).json(ITEMS)
 })
 
-app.get('/items:id', (req, res) => {
+app.get('/item:/id', (req, res) => {
   const specificItemID = parseFloat(req.params.id);
 
   const specificItem = ITEMS.find(specificItem => item.id === specificItemID);
@@ -106,14 +114,16 @@ app.post('/item', (req, res) => {
 
 })
 
-app.delete('/item:id', (req, res) => {
+app.delete('/item/:id', (req, res) => {
+  let deleteID = req.params.id;
+  const item = ITEMS.findIndex(item => item.id === deleteID);
   
 
-  if (req.params.id === -1) {
+  if (deleteID === -1) {
     return res.status(404).json({ "message": "ID does not exist" })
   }
-  ITEMS.splice(ID, 1)
-  console.log("DELETE 204 id: ", ID.toString())
+  ITEMS.splice(deleteID, 1)
+  console.log("DELETE 204 id: ", deleteID.toString())
   res.status(204).json()
 
 })
