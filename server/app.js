@@ -50,6 +50,22 @@ app.get('/items', (req, res) => {
   res.status(200).json(ITEMS)
 })
 
+app.get('/items:id', (req, res) => {
+  const specificItemID = parseFloat(req.params.id);
+
+  const specificItem = ITEMS.find(specificItem => item.id === specificItemID);
+
+  if (!specificItem){
+    console.log("GET /specificItem/{specificItemID} 404 id: " +specificItemID.toString());
+    return res.status(404).json({ message: 'Item not found'})
+  }
+
+  console.log("GET /specificItem/{specificItemID} 200")
+  res.status(200).json(specificItem)
+  
+})
+
+
 app.post('/item', (req, res) => {
 
   let reqFields = ['user_id', 'keywords', 'description', 'image', 'lat', 'lon']
@@ -73,20 +89,20 @@ app.post('/item', (req, res) => {
     console.log("Missing Data! 405")
     res.status(405).json({ "message": "Missing data" })
   }
-  else {
-  let new_Item = {
+  
+  let new_item = {
     id: randomId,
     ...req.body,
     date_from: currentDate,
     date_to: currentDate
   }
 
-  ITEMS.push(new_Item)
+  ITEMS.push(new_item)
   console.log("Successful Post")
-  res.status(201).json(new_Item)
+  res.status(201).json(new_item)
   console.log(ITEMS)
-  console.log(new_Item)
-}
+  console.log(new_item)
+
 
 })
 
