@@ -27,7 +27,7 @@ app.use(function (err, req, res, next) {
 })
 
 //defines path to get current date
-const currentDate = new Date().toISOString()
+const currentDate = new Date().toISOString().replace("Z","")
 
 let randomId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
 
@@ -47,12 +47,6 @@ let ITEMS = [
   }
 ];
 
-app.options('/', (req, res) => {
-  res.status(204).set({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE',
-  }).end();
-});
 
 app.get('/items', (req, res) => {
   res.status(200).json(ITEMS)

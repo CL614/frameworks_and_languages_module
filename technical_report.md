@@ -1,7 +1,8 @@
 Technical Report
 ================
 
-(intro describing purpose of report - 200ish words)
+
+This report provides a comprehensive overview of the server and client developed in the initial assignment. Emphasizing a forward-looking perspective, the focus of this analysis lies in the identification of potential challenges and the formulation of recommendations tailored to both the client and server, particularly in scenarios involving deployment or the utilization of larger-scale versions. A critical aspect of the report involves an in-depth examination of the features inherent to the frameworks and languages employed in the development process. Beyond a mere evaluation, the report endeavors to furnish practical insights and informed suggestions for alternative frameworks that could be considered in a professional setting. By exploring the nuances of the implemented server and client, this report aims to offer a strategic perspective, guiding future decisions and actions in the deployment and scaling processes. The overarching objective is to provide a resource that not only addresses immediate concerns but also serves as a valuable reference for potential enhancements and adaptations in professional environments.
 
 
 Critique of Server/Client prototype
@@ -38,7 +39,7 @@ The way these routes are defined creates an issue. Looking especially at the opt
 Server Framework Features
 -------------------------
 
-### (name of Feature 1)
+### Middleware
 
 (Technical description of the feature - 40ish words)
 (A code block snippet example demonstrating the feature)
@@ -46,7 +47,7 @@ Server Framework Features
 (Provide reference urls to your sources of information about the feature - required)
 
 
-### (name of Feature 2)
+### URL Routing
 
 (Technical description of the feature - 40ish words)
 (A code block snippet example demonstrating the feature)
@@ -54,7 +55,7 @@ Server Framework Features
 (Provide reference urls to your sources of information about the feature - required)
 
 
-### (name of Feature 3)
+### Status Codes
 
 (Technical description of the feature - 40ish words)
 (A code block snippet example demonstrating the feature)
@@ -65,7 +66,7 @@ Server Framework Features
 Server Language Features
 -----------------------
 
-### (name of Feature 1)
+### Dynamic values via the URL
 
 (Technical description of the feature - 40ish words)
 (A code block snippet example demonstrating the feature)
