@@ -26,14 +26,29 @@ ROUTES = (
 The way these routes are defined creates an issue. Looking especially at the options request. The code means that any option request received by the server will generate the same response. In order to create different response for different option request additional routes would have to be added in, meaning for large scale applications, this would be become unmaintainable.
 
 
-### (name of Issue 2)
+### Item Object
 
-(A code snippet example demonstrating the issue)
-(Explain why this pattern is problematic - 40ish words)
+```javascript
+let ITEMS = [
+  {
+    "id": randomId,
+    'user_id': "user1234",
+    'keywords': ["hammer", "nails", "tools"],
+    "description": "A hammer and nails set. In canterbury",
+    "image": "https://i.imgur.com/SCEwQdk.jpeg",
+    "lat": 51.2798438,
+    "lon": 1.0830275,
+    "date_from": currentDate,
+    "date_to": currentDate
+
+  }
+];
+```
+A list has been used here which as a stand alone object is usable. However paired with the functionality of being able to add and delete items, using a list creates problems in regards to unique indexing. In the case of checking if items are unique with out having a unique identifier the whole objects has to be searched increasing the tikme taken of the feedback cycle.
 
 ### Recommendation
-(why the existing implementation should not be used - 40ish words)
-(suggested direction - frameworks 40ish words)
+The current implementation should not be used as it is not maintainable or scalable. This is due to the limits of certain implementations of key parts of the frameworks such as routing and object handling. On large scale operations this would create errors with option request along side lengthy feedback cycles.
+My suggestion for the direction of this implementation would to be use a complex and robust framework such as Django, which hosts a library of resources that removes the need for hard coding commodities and reduces the risks of errors when scaling up.
 
 
 Server Framework Features
@@ -41,10 +56,11 @@ Server Framework Features
 
 ### Middleware
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+Middleware is a function that has access to both the req and res requests. The middleware can carryout a broad spectrum of functionality on code during the requests.
+```javascript
+const cors = require('cors')
+```
+Middleware allows for code to be used on multiple endpoints without the need for code repetition. Middleware can also allow to select if certain endpoints can go around the middleware. Middleware allows the reuse of functionality against a group or specific endpoints. Reducing the duplication of code.
 
 
 ### URL Routing
@@ -74,7 +90,7 @@ Server Language Features
 (Provide reference urls to your sources of information about the feature - required)
 
 
-### (name of Feature 2)
+### .JSON Library
 
 (Technical description of the feature - 40ish words)
 (A code block snippet example demonstrating the feature)
