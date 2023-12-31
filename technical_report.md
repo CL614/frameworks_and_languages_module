@@ -65,37 +65,45 @@ Middleware allows for code to be used on multiple endpoints without the need for
 
 ### URL Routing
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+Express allows the user to code endpoints creating specific routes and functionality depending on the end point selected via the client. 
+```javascript
+app.get('/items', (req, res) => {
+```
+Here we can see '/items' is creating a specific endpoint which is called upon in the URL when a certain function is undertaken via the client. This allows for certain actions to undertake certain functions by calling on specific methods. This reduces the need to write duplicate code and makes the code more maintainable when multiple requests are coming in from the client meaning the code is scalable.
+https://expressjs.com/en/guide/writing-middleware.html
 
 
 ### Status Codes
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+A status code is a numerical value that equivocates to a certain message. Servers use these to communicate errors that they have encountered during the codes lifecycle. For example '404' means the server could not find the client requested web page.
+```javascript
+ res.status(200).json(ITEMS)
+```
+This code allows us to send status codes to the client so we can communicate what is happening with in the server code. By doing this we can easily diagnose why a request can't be fulfilled, and as such developers can easily rectify issues within the code. On top of this it also allows for non technical literate users to interpret issues with the service they are attempting to use.
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 
 Server Language Features
 -----------------------
 
-### Dynamic values via the URL
+### Objects parsed via the client
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+We can parse an object from the client to the server. Javascript can then read this as an object. This means that all data handled by the client can be parsed to the server and handled via the back end this supports asynchronous coding 
+```javascript
+const specificItemID = parseFloat(req.params.itemId);
+```
+As we can see above 'req.params' references to the body that has been parsed from the client to the server. BY ensuring that data is handled via the server we ensure that values and functionality is removed from the user facing code. This heightens the security of the code as values can not be changed by the user via the built in console of web browsers. 
 
 
-### .JSON Library
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+### .JSON 
+
+.JSON allows for objects to be parsed via JSON from the server to the client. JSON stands for JavaScript Object Notation. It is used for formatting objects before being sent to the client web page.
+```javascript
+res.status(201).json(new_item)
+```
+Above we can see '.JSON(new_item)'. The object 'new_item' is being parsed from the server to the client. Without '.JSON' we would have to format the object via hard code, this function removes the need of doing this and therefore removes the need for more lines of code. By allowing the system to autonomously format the object we remove the risk of error and create a more maintainable code environment.
+https://www.w3schools.com/whatis/whatis_json.asp
 
 
 
