@@ -110,54 +110,85 @@ https://www.w3schools.com/whatis/whatis_json.asp
 Client Framework Features
 -------------------------
 
-### (name of Feature 1)
+### Import Vue Library
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+Vue allows us to import the entire Vue library and store it locally with out having to download it to memory so we can call on specific functionality throughout the application. It also allows for specific actions such as mounting in which Vue handles the code as one object and controls its content and display
+```javascript
+<script type="importmap">
+        {
+          "imports": {
+            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+    </script>
+```
+This code provides an import map which removes the need for hardcoding multiple import paths in multiple places across the code. Import maps provide a centralized way to manage and configure import paths. By removing the need to duplicate code and having the import map stored in one area of code, the code is more maintainable if the code ever needs to be changed or scaled for future uses. 
+https://vuejs.org/guide/quick-start
 
 
-### (name of Feature 2)
+### Virtual DOM
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+DOM stands for Document Object Module. Vue uses a virtual DOM that stores changes created by the server/ client code. The VDOM is then compared to the previous VDOM and only the changes are implemented to the DOM and then become visible to the user.
+```javascript
+ const app = createApp(RootComponent)
+ const vm = app.mount("#app");
+```
+By adding the VDOM into the process and comparing it to the previous version, VUE can determine the minimal amount of changes that can be implemented to efficiently change the DOM. This is done by a process called 'diffing' and reduces the need to constantly reload the DOM. Vue can can also batch updates into a single cycle reducing the need for browser reflows and repaints
+https://vuejs.org/guide/extras/rendering-mechanism
 
 
-### (name of Feature 3)
+### Create Instances
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
-
+Vue makes use of the lifecycle hook 'created()'. This hook allows for methods to be created and initialized before being called upon. This occurs before being mounted to the DOM
+```javascript
+created() {
+            this.getItems();
+            this.clearInput();
+          },
+```
+By initializing the item before being called upon and mounted to the DOM we can reduce the time taken for the methods to fetch data pre-requisites that they may need. For example the clear input method ensure that all input fields are cleared when the component is created if this was done after the DOM was rendered we would be adding time to the applications feedback cycle.
+https://vuejs.org/guide/essentials/lifecycle
 
 Client Language Features
 ------------------------
 
-### (name of Feature 1)
+### URL Capture
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+This code allows for the user to extract the api paramter from the URL query string. This points the methods to the correct server. The code also allows for us to input a default api string if one is not present in the url.
+```javascript
+const urlParams = new URLSearchParams(window.location.search);
+const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
+```
+By dynamically configuring the API endpoint without the use of hardcoding we allow developers to provide flexibility in connecting to different API's services. By adding configuration of removing the trailing slash we ensure consistent and reliable construction of API endpoints removing the chance of errors and creating a maintainable application
+https://router.vuejs.org/guide/essentials/dynamic-matching
 
-### (name of Feature 2)
+### HTML Forms
 
-(Technical description of the feature - 40ish words)
-(A code block snippet example demonstrating the feature)
-(Explain the problem-this-is-solving/why/benefits/problems - 40ish words)
-(Provide reference urls to your sources of information about the feature - required)
+HTML forms enable users to provide input and submit data to web servers. Due to the fact that there is a linked button that HTML will view as submit button developes can easily link methods to the forms determining how the inputted data is handled and processed
+```html
+<form @submit.prevent="addItem">
+    <input v-model="item.user_id" name="user_id" placeholder="user_id">
+    <input v-model="keywordsInput" name="keywords" placeholder="keywords">
+    <textarea v-model="item.description" name="description" placeholder="description"></textarea>
+    <input v-model="item.image" name="image" placeholder="image">
+    <input v-model="item.lat" name="lat" placeholder="lat">
+    <input v-model="item.lon" name="lon" placeholder="lon">
+    <button data-action="Create_Item">Create Item</button>
+</form>
+```
+HTML forms provide a standardized and versatile way to collect, process and interact with user input, by incorporating all fields under one form we can ensure that we can handle data as objects and not independent variables. In doing this we remove the need for formatting data and ensure data can be validatted at the point of input
+https://vuejs.org/guide/essentials/forms
 
 
 
 Conclusions
 -----------
 
-(justify why frameworks are recommended - 120ish words)
-(justify which frameworks should be used and why 180ish words)
+Web development frameworks enhance productivity, consistency, and code organization. They provide pre-built components, standardization, and abstraction of complexity, reducing boilerplate code and fostering modularity. Frameworks offer community support, extensive ecosystems, and cross-browser compatibility, ensuring broad accessibility and accelerated development. Security best practices, scalability features, and rapid prototyping tools contribute to robust and secure applications. The structured approach of frameworks facilitates code maintainability, refactoring, and seamless collaboration in large teams. Ultimately, frameworks simplify development, enabling developers to focus on application-specific logic and deliver scalable, maintainable, and efficient web applications.
+
+
+For a comprehensive and scalable web application, the combination of React.js for the frontend and Django for the backend is recommended. React.js stands out for its component-based architecture, promoting code reusability and maintainability. Its virtual DOM ensures efficient rendering updates, contributing to a seamless user experience. With a vibrant community and a rich ecosystem, React provides extensive support and resources for developers, making it an excellent choice for building interactive Single-Page Applications (SPAs). On the backend, Django is a full-stack framework renowned for its "batteries-included" approach, offering built-in features like authentication, admin interface, and security. Its scalability, well-organized documentation, and strong community make it an ideal choice for projects of various sizes. Django's comprehensive tools, including an Object-Relational Mapping (ORM) system, simplify backend development, allowing developers to focus on building robust applications. The synergistic use of React.js and Django combines the strengths of a powerful frontend library with a feature-rich backend framework, providing a solid foundation for developing modern and maintainable web applications.
+
 
 
 
