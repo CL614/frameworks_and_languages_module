@@ -9,9 +9,9 @@ Critique of Server/Client prototype
 ---------------------
 
 ### Overview
-()
+A client-server application is a software system that highlights the core interaction between clients and servers in a divided architecture. It consists of two main components: the client, representing the user interface initiating requests, and the server, managing and responding to these requests. The application emphasizes essential functionality like user authentication, data retrieval, and storage, focusing on communication protocols and data flow between the client and server. The client-side interface is simplified, while the server side emphasizes processing logic and response provision. Additionally, considerations such as scalability, performance, and basic security measures are addressed, offering a testing environment for identifying and resolving potential issues in the application's functionality. Acting as a foundation for subsequent development, the system includes placeholders for future enhancements and additional features, providing a visual representation of the essential elements within the client-server architecture.
 
-### (Route Defining in example_server)
+### Route Defining in example_server
 
 ```python
 ROUTES = (
@@ -44,11 +44,10 @@ let ITEMS = [
   }
 ];
 ```
-A list has been used here which as a stand alone object is usable. However paired with the functionality of being able to add and delete items, using a list creates problems in regards to unique indexing. In the case of checking if items are unique with out having a unique identifier the whole objects has to be searched increasing the tikme taken of the feedback cycle.
+A list has been used here which as a stand alone object is usable. However paired with the functionality of being able to add and delete items, using a list creates problems in regards to unique indexing. In the case of checking if items are unique with out having a unique identifier the whole objects has to be searched increasing the time taken of the feedback cycle.
 
 ### Recommendation
-The current implementation should not be used as it is not maintainable or scalable. This is due to the limits of certain implementations of key parts of the frameworks such as routing and object handling. On large scale operations this would create errors with option request along side lengthy feedback cycles.
-My suggestion for the direction of this implementation would to be use a complex and robust framework such as Django, which hosts a library of resources that removes the need for hard coding commodities and reduces the risks of errors when scaling up.
+The existing implementation is deemed unsuitable for use due to its lack of maintainability and scalability, primarily stemming from limitations in key components like routing and object handling within the frameworks. The current constraints pose a risk of errors, especially during large-scale operations, compounded by issues such as option requests and prolonged feedback cycles. To address these shortcomings, my recommendation is to pivot towards a more sophisticated and robust framework, such as Django. This framework boasts a comprehensive library of resources that eliminates the necessity for hard-coding commodities and significantly mitigates the potential for errors, particularly when scaling up the application. The adoption of Django would enhance the overall reliability, maintainability, and scalability of the implementation.
 
 
 Server Framework Features
@@ -60,8 +59,7 @@ Middleware is a function that has access to both the req and res requests. The m
 ```javascript
 const cors = require('cors')
 ```
-Middleware allows for code to be used on multiple endpoints without the need for code repetition. Middleware can also allow to select if certain endpoints can go around the middleware. Middleware allows the reuse of functionality against a group or specific endpoints. Reducing the duplication of code.
-
+Middleware serves as a pivotal component in software development by facilitating the reuse of code across multiple endpoints, thereby eliminating the need for repetitive coding. This functionality extends to providing the flexibility to exempt specific endpoints from the middleware if required. Through this mechanism, middleware enables the selective application of shared functionality to either a defined group of endpoints or specific ones. The overarching benefit is a significant reduction in code duplication, promoting efficiency and maintainability in the development process. This modular approach enhances code organization and streamlines the implementation of common functionalities throughout the application, contributing to a more robust and scalable system architecture.
 
 ### URL Routing
 
@@ -69,7 +67,7 @@ Express allows the user to code endpoints creating specific routes and functiona
 ```javascript
 app.get('/items', (req, res) => {
 ```
-Here we can see '/items' is creating a specific endpoint which is called upon in the URL when a certain function is undertaken via the client. This allows for certain actions to undertake certain functions by calling on specific methods. This reduces the need to write duplicate code and makes the code more maintainable when multiple requests are coming in from the client meaning the code is scalable.
+In this context, the creation of the '/items' endpoint is integral to the implementation, providing a designated access point invoked in the URL when specific client actions are undertaken. This design enables the execution of distinct functions by calling specific methods associated with the endpoint. The strategic use of endpoints minimizes the necessity for redundant code, thereby enhancing code maintainability. As multiple client requests are accommodated, the implementation proves scalable, streamlining the codebase and ensuring efficient handling of diverse functionalities. This approach not only reduces redundancy but also contributes to a more organized and scalable code structure, facilitating easier management and expansion of the system.
 https://expressjs.com/en/guide/writing-middleware.html
 
 
@@ -79,7 +77,8 @@ A status code is a numerical value that equivocates to a certain message. Server
 ```javascript
  res.status(200).json(ITEMS)
 ```
-This code allows us to send status codes to the client so we can communicate what is happening with in the server code. By doing this we can easily diagnose why a request can't be fulfilled, and as such developers can easily rectify issues within the code. On top of this it also allows for non technical literate users to interpret issues with the service they are attempting to use.
+
+The provided code enables the transmission of status codes to the client, serving as a vital communication bridge to convey the server's internal processes. This functionality proves instrumental in diagnosing the reasons behind unfulfilled requests, empowering developers to efficiently address and rectify issues within the codebase. Moreover, the incorporation of status codes enhances user experience, enabling non-technical users to comprehend and interpret issues with the service they are attempting to use. This transparent communication not only aids in troubleshooting and debugging from a developer's perspective but also contributes to user-friendly interactions, ensuring a more inclusive understanding of the system's status and potential issues.
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 
 
@@ -92,7 +91,7 @@ We can parse an object from the client to the server. Javascript can then read t
 ```javascript
 const specificItemID = parseFloat(req.params.itemId);
 ```
-As we can see above 'req.params' references to the body that has been parsed from the client to the server. BY ensuring that data is handled via the server we ensure that values and functionality is removed from the user facing code. This heightens the security of the code as values can not be changed by the user via the built in console of web browsers. 
+In the highlighted code snippet, the reference to 'req.params' indicates the utilization of parsed data sent from the client to the server. By centralizing data handling within the server, values and functionalities are abstracted from user-facing code, thereby bolstering the security of the application. This approach minimizes the risk of unauthorized manipulation by users through web browser consoles, as critical values are shielded from direct user access. The separation of concerns between client and server, in terms of data handling, not only enhances security but also promotes a more robust architecture by encapsulating sensitive operations within the server-side logic.
 
 
 
@@ -102,7 +101,7 @@ As we can see above 'req.params' references to the body that has been parsed fro
 ```javascript
 res.status(201).json(new_item)
 ```
-Above we can see '.JSON(new_item)'. The object 'new_item' is being parsed from the server to the client. Without '.JSON' we would have to format the object via hard code, this function removes the need of doing this and therefore removes the need for more lines of code. By allowing the system to autonomously format the object we remove the risk of error and create a more maintainable code environment.
+In the provided snippet, '.JSON(new_item)' demonstrates the parsing of the 'new_item' object from the server to the client. This approach eliminates the necessity for manual object formatting through hard coding. The use of '.JSON' streamlines the process, reducing the codebase and mitigating the risk of errors associated with manual formatting. Allowing the system to autonomously handle the object's format not only enhances code maintainability but also fosters a more robust and error-resistant code environment. This approach promotes efficiency by leveraging built-in functionalities, contributing to a streamlined and reliable communication process between the server and client components.
 https://www.w3schools.com/whatis/whatis_json.asp
 
 
@@ -122,7 +121,7 @@ Vue allows us to import the entire Vue library and store it locally with out hav
         }
     </script>
 ```
-This code provides an import map which removes the need for hardcoding multiple import paths in multiple places across the code. Import maps provide a centralized way to manage and configure import paths. By removing the need to duplicate code and having the import map stored in one area of code, the code is more maintainable if the code ever needs to be changed or scaled for future uses. 
+The code introduces an import map, a mechanism that eliminates the necessity for hardcoding multiple import paths in various sections of the code. With import maps, import paths are centrally managed and configured, reducing redundancy and enhancing maintainability. This centralized approach eliminates the need to duplicate import-related code across different parts of the application. Storing the import map in a single location streamlines code management and proves advantageous when modifications or scaling for future use are required. Consequently, the codebase becomes more maintainable, as changes and expansions can be implemented efficiently and consistently by referencing the centralized import map.
 https://vuejs.org/guide/quick-start
 
 
@@ -133,7 +132,8 @@ DOM stands for Document Object Module. Vue uses a virtual DOM that stores change
  const app = createApp(RootComponent)
  const vm = app.mount("#app");
 ```
-By adding the VDOM into the process and comparing it to the previous version, VUE can determine the minimal amount of changes that can be implemented to efficiently change the DOM. This is done by a process called 'diffing' and reduces the need to constantly reload the DOM. Vue can can also batch updates into a single cycle reducing the need for browser reflows and repaints
+
+The incorporation of Virtual DOM (VDOM) in Vue.js introduces a mechanism for efficiently updating the Document Object Model (DOM). Through a process known as 'diffing,' Vue.js can discern the minimal changes required by comparing the current VDOM state with the previous version. This strategy minimizes the need for frequent reloading of the entire DOM, enhancing performance. Additionally, Vue.js optimizes updates by batching them into a single cycle, thereby reducing the occurrence of browser reflows and repaints. The implementation of VDOM in Vue.js contributes to a more responsive and streamlined user interface, enhancing the overall efficiency and user experience of web applications built with the framework.
 https://vuejs.org/guide/extras/rendering-mechanism
 
 
@@ -146,7 +146,7 @@ created() {
             this.clearInput();
           },
 ```
-By initializing the item before being called upon and mounted to the DOM we can reduce the time taken for the methods to fetch data pre-requisites that they may need. For example the clear input method ensure that all input fields are cleared when the component is created if this was done after the DOM was rendered we would be adding time to the applications feedback cycle.
+By initializing the item before it is called upon and mounted to the DOM, we can optimize the performance of methods that fetch data prerequisites. For instance, the clear input method ensures that all input fields are cleared when the component is created. If this initialization were deferred until after the DOM is rendered, it would introduce additional time to the application's feedback cycle. The proactive approach of initializing the item before mounting streamlines the process, reducing the time it takes for methods to execute and enhancing the overall responsiveness of the application.
 https://vuejs.org/guide/essentials/lifecycle
 
 Client Language Features
@@ -159,7 +159,8 @@ This code allows for the user to extract the api paramter from the URL query str
 const urlParams = new URLSearchParams(window.location.search);
 const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
 ```
-By dynamically configuring the API endpoint without the use of hardcoding we allow developers to provide flexibility in connecting to different API's services. By adding configuration of removing the trailing slash we ensure consistent and reliable construction of API endpoints removing the chance of errors and creating a maintainable application
+
+Dynamic configuration of the API endpoint, rather than hardcoding it, offers developers flexibility to connect to different API services. This approach allows for easy adaptation to varying endpoints without altering the source code. Moreover, the inclusion of configuration options, such as removing trailing slashes, ensures the consistent and reliable construction of API endpoints. This consistency minimizes the likelihood of errors and contributes to the creation of a more maintainable application. Developers can efficiently manage and update API configurations without the need for extensive code modifications, enhancing the adaptability and robustness of the software.
 https://router.vuejs.org/guide/essentials/dynamic-matching
 
 ### HTML Forms
@@ -176,7 +177,7 @@ HTML forms enable users to provide input and submit data to web servers. Due to 
     <button data-action="Create_Item">Create Item</button>
 </form>
 ```
-HTML forms provide a standardized and versatile way to collect, process and interact with user input, by incorporating all fields under one form we can ensure that we can handle data as objects and not independent variables. In doing this we remove the need for formatting data and ensure data can be validatted at the point of input
+HTML forms offer a standardized and versatile mechanism for collecting and processing user input. By consolidating all relevant fields under a single form, we can handle data as cohesive objects rather than independent variables. This approach eliminates the need for formatting data, promoting consistency and simplifying data handling. Additionally, grouping fields within a form facilitates the implementation of centralized validation processes at the point of input. By structuring data in this way, the form becomes a more cohesive and manageable unit, enhancing the efficiency and reliability of the data collection and validation processes within the application.
 https://vuejs.org/guide/essentials/forms
 
 
