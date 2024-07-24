@@ -1,134 +1,184 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+  <!-- set up of skeleton layout framework-->
+  <head>
+    <meta charset="utf-8">
+    <!--layout framework feature - mobile specific set up (scales to mobile automatically )-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-    <meta charset="utf-8" />
-    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
-    <title>Tool App</title>
-    <h1>Freecycle</h1>
+    <!---layout framework feature - links index.html to the css style sheets of the skeleton framework-->
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/skeleton.css" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+    <title>FreeCycle</title>
+  </head>
+
+  <body>
+
     <script type="importmap">
-        {
-          "imports": {
-            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
-          }
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
         }
+      }
     </script>
-</head>
-
-<body>
-    <h1>Tool App</h1>
+      
     <div id="app">
-        <h2>Create</h2>
-        <form @submit.prevent="addItem">
-            <input v-model="item.user_id" name="user_id" placeholder="user_id">
-            <input v-model="keywordsInput" name="keywords" placeholder="keywords">
-            <textarea v-model="item.description" name="description" placeholder="description"></textarea>
-            <input v-model="item.image" name="image" placeholder="image">
-            <input v-model="item.lat" name="lat" placeholder="lat">
-            <input v-model="item.lon" name="lon" placeholder="lon">
-            <button data-action="Create_Item">Create Item</button>
-        </form>
+      <!---Basic Skeleton navbar
+      &nbsp; allows there to be a space after the text -->
+      <div class="navBar" id="mainNavBar">
+        <div class="eleven columns">
+          <a href="#home">Home &nbsp; </a>
+          <a href="#Items">Items &nbsp;</a>
+          <a href="javascript:void(0);" class="icon" onClick="openDrawerMenu()">&#9776;</a>
+        </div>
+      </div>
 
-        <h2>Items</h2>
-        <ul>
-            <li v-for="item in items" :key="item.id">
-                <img :src="item.image">
-                <span data-field="id">{{ item.id }}</span>
-                <span data-field="user_id">{{ item.user_id }}</span>
-                <span data-field="keywords">{{ item.keywords }}</span>
-                <span data-field="description">{{ item.description }}</span>
-                <span data-field="lat">{{ item.lat }}</span>
-                <span data-field="lon">{{ item.lon }}</span>
-                <span data-field="date_from">{{ item.date_from}}</span>
-                <span data-field="date_to">{{ item.date_to}}</span>
-                <button data-action="delete" @click="deleteItem(item.id)">Delete</button>
+      <h1><strong> Welcome to FreeCycle</strong></h1>
+    
+      <!---Layout framework feature - Sets up the input form to use skeletons 6 column set up-->
+      <div class="row">
+        <div class="six columns">
+          <h4><u>Set up your item to sell </u></h4>
+          <form @submit.prevent="postItem">
+            <input v-model="item.user_id" name="user_id" placeholder="Enter your User Id" />
+            <input v-model="item.keywords" name="keywords" placeholder="Enter Item keywords" />
+            <input v-model="item.description" name="description" placeholder="Enter item description" />
+            <input v-model="item.image" name="image" placeholder="image address (optional)" />
+            <input v-model="item.lat" name="lat" placeholder="enter lat" />
+            <input v-model="item.lon" name="lon" placeholder="enter lon" />
+            <!--layout framework feature - link to skeleton button documentation-->
+            <input data-action="create_item" class="button-primary" type="submit" value="Create Item">  
+          </form>
+        </div>
+
+        <!--sets up available items in a list, marked as seven columns so starts underneath the previous form-->
+        <div class="seven columns">
+          <h4><u>Current items available:</u></h4>
+          <!---Header for the items so User is aware of what each item is --->
+          <h6>User     Description     Keywords     Image      Lat     Lon     Item Id   </h6>
+          <!---sets up the list and gives each item space-->
+          <ul>
+            <li v-for="item in list" :key="item.id">
+              <span data-field="user_id">{{item.user_id}} &nbsp; </span>
+              <span data-field="description">{{item.description}} &nbsp;</span>
+              <span data-field="keywords">{{item.keywords.join(', ')}} &nbsp;</span>
+              <span data-field="image">{{item.image}} &nbsp;</span>
+              <span data-field="lat">{{item.lat}} &nbsp;</span>
+              <span data-field="lon">{{item.lon}} &nbsp;</span>
+              <span data-field="id">{{item.id}} </span>
+              <button class="button-primary" data-action="delete" @click="deleteItem(item.id)">Delete</button>
             </li>
-        </ul>
-
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <script type="module">
-        import { createApp, ref } from 'vue'
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');
-
-
-        const RootComponent = {
-            data() {
-                return {
-                    message: 'Hello',
-                    item: {
-                        id: '',
-                        user_id: '',
-                        keywords: '',
-                        description: '',
-                        image: '',
-                        lat: '',
-                        lon: '',
-                        date_from: '',
-                        date_to: '',
-                    },
-                    items: [],
-                }
-            },
-
-            created() {
-                this.getItems();
-                this.clearInput();
-            },
-
-            methods: {
-
-                getItems() {
-                    fetch(`${urlAPI}/items`)
-                        .then(response => response.json())
-                        .then(json => {
-                            console.log("Successful GET request")
-                            this.items = json;
-                        })
-                        .catch(err => console.error(err));
-                },
-
-                clearInput() {
-                    this.item.user_id = ''
-                    this.item.keywords = [""]
-                    this.item.description = ''
-                    this.item.image = ''
-                    this.item.lat = ''
-                    this.item.lon = ''
-                },
-
-                addItem(data) {
-                    const keywordsArray = this.keywordsInput.split(',');
-                    this.item.keywords = keywordsArray;
-                    console.log(this.item)
-                    fetch(`${urlAPI}/item`, {
-                        method: "POST",
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(this.item),
-                    })
-                        .then(response => response.json())
-                        .then(json => console.log('Item Posted', json))
-                        .then(() => this.getItems())
-                        .catch(err => console.error(err))
-                        .then(() => this.clearInput());
-                },
-                deleteItem(id) {
-                    fetch(`${urlAPI}/item/${id}`, {
-                        method: "DELETE",
-                    })
-                        .then(() => this.getItems())
-                        .catch(err => console.error(err));
-
-                },
-            },
-
-        };
-        const app = createApp(RootComponent)
-        const vm = app.mount("#app");
-    </script>
-
-</body>
-
+  </body>
 </html>
+
+<script type="module">
+  import { createApp } from 'vue'
+
+  // sets the URL to the URLAPI. Using URLParams allows the content to work dynamically with the application.
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlAPI = (urlParams.get('api') || '').replace(/\/$/, '');
+  console.log(urlAPI);
+  
+  // creates the application, as well as the item object and the list of objects.
+  createApp({
+    data() {
+      return {
+        item: {
+          user_id: "", 
+          keywords: "",  // For simplicity, keywords are handled as a comma-separated string
+          description: "", 
+          image: "", 
+          lat: "", 
+          lon: "",
+        },
+        list: [],
+      }
+    },
+
+    // on start up this calls the getItems func to load the list of items and makes sure the form is clear so new entries can be made.
+    created() {
+      this.getItems()
+      this.clearForm()
+    },
+
+    // the methods the client uses
+    methods: {
+      // method to clear the form
+      clearForm() {
+        this.item = {
+          user_id: "",
+          keywords: "", 
+          description: "", 
+          image: "", 
+          lat: "", 
+          lon: "", 
+        }
+      },
+
+      // method that creates the item using the input
+      postItem() {
+        console.log(this.item)
+        const itemToPost = {
+          ...this.item,
+          keywords: this.item.keywords.split(',').map(kw => kw.trim()) // Split keywords by comma
+        };
+        fetch(`${urlAPI}/item`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(itemToPost),
+        })
+        .then(response => response.json())
+        .then(json => {
+          console.log("Item created", json)
+          this.clearForm()
+          this.getItems()
+        })
+        .catch(err => console.error(err))
+      },
+
+      // method that gets the list of items
+      getItems() {
+        fetch(`${urlAPI}/items`, {
+          method: 'GET',
+        })
+        .then(response => response.json())
+        .then(json => {
+          this.list = json
+          console.log(this.list)
+        })
+        .catch(err => console.error(err))
+      },
+
+      // method that gets an item by its ID
+      getItem(id) {
+        fetch(`${urlAPI}/item/${id}`, {
+          method: 'GET',
+        })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json)
+        })
+        .catch(err => console.error(err))
+      },
+
+      // method that deletes the selected item
+      deleteItem(id) {
+        fetch(`${urlAPI}/item/${id}`, {
+          method: 'DELETE',
+        })
+        .then(() => {
+          console.log('item deleted')
+          this.getItems()
+        })
+        .catch(err => console.error(err))
+      },
+    },
+
+  }).mount('#app')
+</script>

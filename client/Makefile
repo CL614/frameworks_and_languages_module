@@ -1,7 +1,20 @@
-DOCKER_IMAGE= vue
+#DOCKER_IMAGE:=client
 
-build:
-	docker build -t $(DOCKER_IMAGE) .
-run:
-	docker run --rm -it --publish 8001:8001 ${DOCKER_IMAGE}
+#build:
+	
+
+#run:
+	
+
+run_local:
+	python3 -m http.server 8001
+
+
+run: css/skeleton.css
+	python3 -m http.server
+
+css/skeleton.css:
+	mkdir -p css
+	curl https://raw.githubusercontent.com/dhg/Skeleton/master/css/normalize.css -o css/normalize.css
+	curl https://raw.githubusercontent.com/dhg/Skeleton/gh-pages/dist/css/skeleton.css -o css/skeleton.css
 
