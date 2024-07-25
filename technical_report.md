@@ -38,8 +38,8 @@ def serve_app(func_app, port, host=''):
 This implementation is problematic because:
 
 Limited Packet Size: If a packet exceeds 64k, the server will fail to process it correctly.
-Lack of Asynchronous Handling: The server can handle only one request at a time, leading to potential crashes under heavy load.
-Unnecessary Complexity: Python offers built-in libraries for handling HTTP requests, rendering this custom implementation redundant and error-prone.
+Lack of Asynchronous Handling: The server can handle only one request at a time, leading to potential crashes under heavy load. Real Python (2024)
+Unnecessary Complexity: Python offers built-in libraries for handling HTTP requests, rendering this custom implementation redundant and error-prone. Real Python (2024)
 
 Python has an intergrated function that handles HTTP requests and as such the code above is redundant 
 
@@ -61,7 +61,8 @@ ROUTES = (
 Issues with this approach include:
 
 Global and Centralized Routing: All routes are defined in a single location, making the system difficult to manage as it scales.
-Limited Flexibility: The use of regular expressions for routing is not scalable and can lead to difficulties in chaining routes.
+Limited Flexibility: The use of regular expressions for routing is not scalable and can lead to difficulties in chaining routes. Python.org (2024)
+
 
 ### Recommendation
 The prototype's implementation lacks structure and does not save data once created. The client.html document is unstructured, with a haphazard layout, buttons, and functions, making it hard to understand.
@@ -74,59 +75,59 @@ Server Framework Features
 
 ### Middleware
 
-Express offers modular and reusable middleware, such as CORS (Cross-Origin Resource Sharing), allowing for cross-origin resource sharing .
+Express offers modular and reusable middleware, such as CORS (Cross-Origin Resource Sharing), allowing for cross-origin resource sharing . Express.js (2024)
 ```javascript
 const cors = require('cors');
 app.use(cors());
 ```
 Once installed, only two lines of code are required for CORS to run in Express, as shown in the provided snippet. 
 
-CORS (Cross-Origin Resource Sharing) is a browser-friendly security feature that allows access to APIs from different origins. Without CORS, access to the site may be blocked due to default browser behaviors that follow the same-origin policy. This policy restricts web pages from making requests to a different domain than the one that served the web page, causing cross-domain requests to fail. CORS allows for these cross-domain requests to occur securely.
+CORS (Cross-Origin Resource Sharing) is a browser-friendly security feature that allows access to APIs from different origins. Without CORS, access to the site may be blocked due to default browser behaviors that follow the same-origin policy Mardan (n.d.). This policy restricts web pages from making requests to a different domain than the one that served the web page, causing cross-domain requests to fail. CORS allows for these cross-domain requests to occur securely.Express.js (2024)
 
 ### URL Routing
 
-Routing is the mechanism by which an application responds to client requests to specific endpoints using HTTP request methods such as GET, POST, DELETE, and others. In Express, routing is achieved through these HTTP methods, enabling the app to listen for requests and invoke the appropriate function when a match is found.
+Routing is the mechanism by which an application responds to client requests to specific endpoints using HTTP request methods such as GET, POST, DELETE, and others. In Express, routing is achieved through these HTTP methods, enabling the app to listen for requests and invoke the appropriate function when a match is found. Express.js (2024)
 ```javascript
 app.get('/items', (req, res) => {
   res.status(200).json(Object.values(ITEM));
 });
 ```
-Routing establishes a direct communication pathway between the server and the client, selecting the optimal route based on predetermined rules. This ensures that communication paths are straightforward and efficient, reducing latency for the user. Efficient routing helps minimize network communication failures, which can occur when sites take a long time to load, thereby enhancing the overall user experience.
+Routing establishes a direct communication pathway between the server and the client, selecting the optimal route based on predetermined rules. This ensures that communication paths are straightforward and efficient, reducing latency for the user. Efficient routing helps minimize network communication failures, which can occur when sites take a long time to load, thereby enhancing the overall user experience. Express.js (2024)
 
 ### Error Handling
-Express includes a default error handler built in. This handler captures and processes errors that occur both synchronously and asynchronously. As a middleware function, it can be added to the end of the function stack, ensuring that any unhandled errors are caught and appropriately managed.
+Express includes a default error handler built in. This handler captures and processes errors that occur both synchronously and asynchronously. As a middleware function, it can be added to the end of the function stack, ensuring that any unhandled errors are caught and appropriately managed. Express.js (2024)
 ```javascript
  app.get('/', (req, res) => {
   throw new Error('BROKEN');
 });
 ```
-Having a built-in default error handling system allows errors to be detected and reported efficiently, facilitating more effective debugging. This built-in feature also reduces the need for additional lines of code, streamlining the development process and maintaining cleaner code.
+Having a built-in default error handling system allows errors to be detected and reported efficiently, facilitating more effective debugging. This built-in feature also reduces the need for additional lines of code, streamlining the development process and maintaining cleaner code. Mardan (n.d.)
 
 Server Language Features
 -----------------------
 
 ### Dynamic Typing
 
-JavaScript’s dynamic typing allows variables to be declared without specifying a variable type (e.g., String, int). At runtime, the program assigns a type to a variable based on its current value. This flexibility enables more concise and adaptable coding, as variables can hold different types of values over their lifetime without explicit type declarations.
+JavaScript’s dynamic typing allows variables to be declared without specifying a variable type (e.g., String, int). At runtime, the program assigns a type to a variable based on its current value. This flexibility enables more concise and adaptable coding, as variables can hold different types of values over their lifetime without explicit type declarations. Mozilla Developer Network (2024)
 ```javascript
 ITEM = {};
 ```
-Not having to explicitly declare a variable type simplifies development, enabling developers to write more concise and flexible code. Dynamic typing allows variables to be assigned different types of values throughout their lifecycle. This means that a variable initially holding a number could later be reassigned to a string or an object, accommodating varying data needs without requiring type conversion or declarations. This flexibility streamlines code development and maintenance, as developers can focus on functionality rather than managing type constraints.
+Not having to explicitly declare a variable type simplifies development, enabling developers to write more concise and flexible code. Dynamic typing allows variables to be assigned different types of values throughout their lifecycle. This means that a variable initially holding a number could later be reassigned to a string or an object, accommodating varying data needs without requiring type conversion or declarations. This flexibility streamlines code development and maintenance, as developers can focus on functionality rather than managing type constraints. Mozilla Developer Network (2024)
 
 ### Const
-In JavaScript, the `const` keyword is used to declare a variable whose value cannot be reassigned after its initial assignment. This immutability helps maintain predictability in code by preventing accidental changes to the variable's value. Using `const` is ideal for variables that should remain constant throughout the program, enhancing code reliability and readability. By clearly indicating that a variable's value is intended to remain unchanged, `const` helps prevent bugs related to unintended reassignment and ensures that the variable's integrity is preserved.
+In JavaScript, the `const` keyword is used to declare a variable whose value cannot be reassigned after its initial assignment. This immutability helps maintain predictability in code by preventing accidental changes to the variable's value. Using `const` is ideal for variables that should remain constant throughout the program, enhancing code reliability and readability. By clearly indicating that a variable's value is intended to remain unchanged, `const` helps prevent bugs related to unintended reassignment and ensures that the variable's integrity is preserved. FreeCodeCamp (2019)
 ```javascript
 const app = express();
 const port = 8000;
 ```
-Using the keyword Const makes code more predictable and less likely to succumb to bugs. Const also saves the program some time when it compiles as it does not have to figure out whether the value is to be changed.
+Using the keyword Const makes code more predictable and less likely to succumb to bugs. Const also saves the program some time when it compiles as it does not have to figure out whether the value is to be changed. FreeCodeCamp (2019)
 
 Client Framework Features
 -------------------------
 
 ### Virtual DOM
 
-Vue.js employs a virtual DOM to enhance performance and optimize updates. When changes are made to the application state, Vue.js first updates a virtual representation of the DOM rather than the actual DOM. This virtual DOM is a lightweight copy of the real DOM that reflects the current state of the application.
+Vue.js employs a virtual DOM to enhance performance and optimize updates. When changes are made to the application state, Vue.js first updates a virtual representation of the DOM rather than the actual DOM. This virtual DOM is a lightweight copy of the real DOM that reflects the current state of the application. Vue.js (2024)
 
 Here’s how it works:
 
@@ -134,9 +135,9 @@ Update in Virtual DOM: When a change occurs in the application, Vue.js updates t
 
 Diffing Algorithm: Vue.js uses a diffing algorithm to compare the updated virtual DOM with the previous version. It calculates the minimal set of changes required to update the real DOM.
 
-Patch Real DOM: Only the necessary changes—those that differ between the old and new virtual DOM representations—are then applied to the real DOM. This selective update reduces the number of direct manipulations to the DOM, which improves performance.
+Patch Real DOM: Only the necessary changes—those that differ between the old and new virtual DOM representations—are then applied to the real DOM. This selective update reduces the number of direct manipulations to the DOM, which improves performance.Vue.js (2024)
 
-The virtual DOM approach helps address common performance issues associated with direct DOM manipulation by minimizing the number of updates needed and reducing the overhead of browser rendering processes. This results in faster updates and a more responsive user experience.
+The virtual DOM approach helps address common performance issues associated with direct DOM manipulation by minimizing the number of updates needed and reducing the overhead of browser rendering processes. This results in faster updates and a more responsive user experience.Vue Mastery (2024)
 
 In Vue.js, a virtual DOM node can be represented as a JavaScript object with properties that describe the structure and content of the DOM element. For example:
 ```javascript
@@ -161,10 +162,10 @@ Within this client a virtual DOM could be considered as this:
           list: [1,2,3],
         }
 ```
-
+Vue.js (2024)
 ### Two-Way Data Binding
 
-Vue has an inbuilt directive called v-model that facilitates two-way data binding between an input element and a data property. This means that any changes made to the input element are automatically reflected in the data property, and vice versa. This seamless synchronization helps in creating dynamic and responsive user interfaces with less effort.
+Vue has an inbuilt directive called v-model that facilitates two-way data binding between an input element and a data property. This means that any changes made to the input element are automatically reflected in the data property, and vice versa. This seamless synchronization helps in creating dynamic and responsive user interfaces with less effort. Vue.js (2024)
 
 ```javascript
 <input v-model="item.user_id" name="user_id" placeholder="Enter your User Id"/>
@@ -172,7 +173,7 @@ Vue has an inbuilt directive called v-model that facilitates two-way data bindin
 ```
 By using `v-model="name"`, any changes made to the input element will automatically update the `name` property, and any changes to the `name` property will update the input element. This two-way data binding is a powerful feature in Vue.js that simplifies the development process.
 
-The data binding features in Vue.js streamline the process of keeping the user interface (UI) in sync with the underlying data model. This automation reduces the need for manual DOM manipulation and event handling, making it easier to develop dynamic and responsive applications. Additionally, the use of directives like `v-model` helps maintain code readability, allowing developers to focus on application logic rather than boilerplate code. This leads to more efficient and maintainable codebases.
+The data binding features in Vue.js streamline the process of keeping the user interface (UI) in sync with the underlying data model. This automation reduces the need for manual DOM manipulation and event handling, making it easier to develop dynamic and responsive applications. Additionally, the use of directives like `v-model` helps maintain code readability, allowing developers to focus on application logic rather than boilerplate code. This leads to more efficient and maintainable codebases. Vue.js (2024)
 
 ### List Rendering
 
@@ -213,9 +214,9 @@ Client Language Features
 ------------------------
 
 ### Automatic Semicolons
-In JavaScript, while some statements explicitly require semicolons (;) to terminate them, the language's automatic semicolon insertion (ASI) feature helps streamline coding by automatically adding semicolons when they are omitted. This feature reduces the likelihood of syntax errors due to missing semicolons and makes the code cleaner and easier to write. There are specific scenarios in which JavaScript will automatically insert semicolons:
+In JavaScript, while some statements explicitly require semicolons (;) to terminate them, the language's automatic semicolon insertion (ASI) feature helps streamline coding by automatically adding semicolons when they are omitted. This feature reduces the likelihood of syntax errors due to missing semicolons and makes the code cleaner and easier to write Mozilla Developer Network (2024). There are specific scenarios in which JavaScript will automatically insert semicolons: 
 
-When an Unallowed Token is Encountered: If the JavaScript parser encounters a token that cannot legally follow the current statement, it will automatically insert a semicolon to terminate the statement. For example, if a line ends with a return statement followed by a newline, JavaScript will insert a semicolon after return to complete the statement.
+When an Unallowed Token is Encountered: If the JavaScript parser encounters a token that cannot legally follow the current statement, it will automatically insert a semicolon to terminate the statement. For example, if a line ends with a return statement followed by a newline, JavaScript will insert a semicolon after return to complete the statement Mozilla Developer Network (2024).
 ```javascript
 function example() {
   return
@@ -228,7 +229,7 @@ function example() {
 }
 ```
 
-At the End of the Input Stream: When the end of a JavaScript file or script is reached, a semicolon is automatically inserted if it is missing. This ensures that the final statement is properly terminated even if the developer forgets to add a semicolon.
+At the End of the Input Stream: When the end of a JavaScript file or script is reached, a semicolon is automatically inserted if it is missing. This ensures that the final statement is properly terminated even if the developer forgets to add a semicolon Mozilla Developer Network (2024).
 ```javascript
 let x = 5
 let y = 10
@@ -237,7 +238,7 @@ let x = 5;
 let y = 10;
 ```
 
-When Forbidden Line Terminators are Present: JavaScript will insert a semicolon if it detects a line terminator (such as a newline character) in places where a semicolon is expected but omitted. This is done to prevent syntax errors caused by missing semicolons in cases where a new line might otherwise cause issues.
+When Forbidden Line Terminators are Present: JavaScript will insert a semicolon if it detects a line terminator (such as a newline character) in places where a semicolon is expected but omitted. This is done to prevent syntax errors caused by missing semicolons in cases where a new line might otherwise cause issues Mozilla Developer Network (2024).
 ```javascript
 let x = 5
 let y = 10
@@ -256,7 +257,7 @@ for (const button of buttons) {
   button.addEventListener("click", createParagraph);
 }
 ```
-This feature prevents developers from cluttering their HTML with JavaScript code, resulting in cleaner, more organized code. By separating event handling from HTML structure, it streamlines development and enhances code readability.
+This feature prevents developers from cluttering their HTML with JavaScript code, resulting in cleaner, more organized code. By separating event handling from HTML structure, it streamlines development and enhances code readability Mozilla Developer Network (2024).
 
 Conclusion
 -----------
@@ -283,7 +284,35 @@ Overall, the integration of these frameworks and technologies contributes to a m
 Refrences
 -----------
 
+Real Python. Socket Programming in Python (Guide). Available at: https://realpython.com/python-sockets/ (Accessed: 24 July 2024).
 
+Python.org. Python Networking Programming. Available at: https://docs.python.org/3/howto/sockets.html (Accessed: 21 July 2024).
+
+Express.js. Express - Node.js web application framework. Available at: https://expressjs.com/ (Accessed: 22 July 2024).
+
+Mardan, A. (n.d.) Express.js Guide: The Comprehensive Book on Express.js. Available at: https://expressjsguide.com/ (Accessed: 23 July 2024).
+
+Mozilla Developer Network (MDN). JavaScript Guide. Available at: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide (Accessed: 23 July 2024).
+
+FreeCodeCamp. (2019) Understanding const in JavaScript. Available at: https://www.freecodecamp.org/news/understanding-const-in-javascript/ (Accessed: 24 July 2024).
+
+Vue.js. Vue.js - The Progressive JavaScript Framework. Available at: https://vuejs.org/ (Accessed: 24 July 2024).
+
+Vue Mastery. Introduction to Vue.js. Available at: https://www.vuemastery.com/courses/intro-to-vue-3/intro-to-vue3/ (Accessed: 24 July 2024).
+
+Vue.js. Virtual DOM in Vue.js. Available at: https://vuejs.org/v2/guide/render-function.html (Accessed: 21 July 2024).
+
+Vue.js. Vue.js Guide - Forms. Available at: https://vuejs.org/v2/guide/forms.html (Accessed: 21 July 2024).
+
+Vue.js. List Rendering in Vue.js. Available at: https://vuejs.org/v2/guide/list.html (Accessed: 21 July 2024).
+
+Skeleton. Skeleton: A Dead Simple, Responsive Boilerplate. Available at: http://getskeleton.com/ (Accessed: 23 July 2024).
+
+Mozilla Developer Network (MDN). JavaScript Automatic Semicolon Insertion. Available at: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#automatic_semicolon_insertion (Accessed: 21 July 2024).
+
+Mozilla Developer Network (MDN). EventTarget.addEventListener(). Available at: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener (Accessed: 24 July 2024).
+
+Mozilla Developer Network (MDN). Cross-Origin Resource Sharing (CORS). Available at: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS (Accessed: 24 July 2024).
 
 
 
